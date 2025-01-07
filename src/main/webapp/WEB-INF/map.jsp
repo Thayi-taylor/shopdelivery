@@ -152,7 +152,7 @@
             });
         }
 
-     // 📌 **읍면동 경계 표시 (pg 문자열 → GeoJSON 변환 및 표시)**
+        // 📌 **읍면동 경계 표시 (pg 문자열 → GeoJSON 변환 및 표시)**
         function fetchBoundary(sgg_cd, full_cd, full_name) {
             if (!accessToken) {
                 alert("❌ Access Token이 없습니다. 다시 시도해 주세요.");
@@ -188,23 +188,28 @@
                             }
                         }
 
-                        // 📌 **일치하는 MULTIPOLYGON을 GeoJSON으로 변환**
+                        // 📌 **일치하는 MULTIPOLYGON을 GeoJSON으로 변환 및 지도에 표시**
                         if (matchingBoundary) {
                             try {
                                 // 1️⃣ MULTIPOLYGON 문자열에서 좌표 추출
                                 let cleanedPg = matchingBoundary
-                                    .replace('MULTIPOLYGON(((', '') // 앞부분 제거
-                                    .replace(')))', '') // 뒷부분 제거
-                                    .split('),('); // 외부 다각형 분리
+                                    .replace('MULTIPOLYGON(((', '') // 시작 부분 제거
+                                    .replace(')))', '') // 끝 부분 제거
+                                    .trim(); // 양 끝 공백 제거
 
-                                let geoJsonCoordinates = cleanedPg.map(polygon => {
-                                    return [polygon.split(',').map(coord => {
-                                        let [x, y] = coord.trim().split(' ').map(Number);
+                                console.log("🔄 정제된 MULTIPOLYGON 문자열:", cleanedPg);
+
+                                // 2️⃣ 쉼표(`,`)로 좌표 분리 및 [x, y] 배열로 변환
+                                let geoJsonCoordinates = [
+                                    cleanedPg.split(',').map(coord => {
+                                        let [x, y] = coord.trim().split(' ').map(Number); // 공백으로 x, y 분리 후 숫자로 변환
                                         return [x, y];
-                                    })];
-                                });
+                                    })
+                                ];
 
-                                // 2️⃣ GeoJSON 데이터 생성
+                                console.log("✅ 변환된 GeoJSON 좌표:", geoJsonCoordinates);
+
+                                // 3️⃣ GeoJSON 데이터 생성
                                 var geoJsonData = {
                                     type: "FeatureCollection",
                                     features: [{
@@ -216,7 +221,9 @@
                                     }]
                                 };
 
-                                // 3️⃣ GeoJSON으로 지도에 표시
+                                console.log("🌍 생성된 GeoJSON 데이터:", geoJsonData);
+
+                                // 4️⃣ GeoJSON으로 지도에 표시
                                 var boundaryLayer = sop.geoJson(geoJsonData, {
                                     style: {
                                         color: "#2E64FE", // 경계선 색상 (파란색)
@@ -227,13 +234,16 @@
                                     }
                                 }).addTo(map);
 
+                                // 5️⃣ 폴리곤 객체 저장
                                 polygons[full_cd] = boundaryLayer;
 
                                 console.log("✅ 일치하는 경계가 지도에 표시되었습니다:", full_name);
 
-                                // 리스트에 지역명 추가
+                                // 6️⃣ 리스트에 지역명 추가
                                 $("#regionList").append(
-                                    `<li id="region-${full_cd}">${full_name}</li>`
+                                    '<li id="region-' + full_cd + '">' +
+                                    '<span>' + full_name + '</span>' +
+                                    '</li>'
                                 );
 
                             } catch (error) {
@@ -251,6 +261,7 @@
                 }
             });
         }
+
 
      
         // 📌 **폴리곤 및 목록 항목 제거**
