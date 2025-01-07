@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>현재 위치 및 행정구역 경계 표시</title>
+    <title>배송가능지역 설정</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=15e24dc29377490ea324"></script>
@@ -44,7 +44,7 @@
     </style>
 </head>
 <body>
-    <h1>현재 위치 및 행정구역 경계 표시</h1>
+    <h1>배송가능지역 설정</h1>
     <div id="map"></div>
     <ul id="regionList"></ul>
     
