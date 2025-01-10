@@ -1,16 +1,55 @@
+@charset "UTF-8";
+
 table {
 	border-collapse: collapse;
 }
 
-.center {
-	margin: 0 auto;
-	display: table;
+.nav-item{
+	margin-right: 20px;
 }
 
-.nav {
+.custom-button {
+	background-color: #4CAF50; /* 초록색 */
+	color: white;
+	border: none;
+}
+
+.nav-link:hover {
+	color: #155724; /* 더 어두운 초록색 */
+}
+
+#hr-deco{
+	border: 1px solid #000;
+	height: 1px;
+	display:block;
 	width: 100%;
-	height: 100px;
-	line-height: 100px;
+}
+
+
+.table a {
+	text-decoration: none; /* 밑줄 없애기 */
+	color: inherit;
+	display: block; /* 클릭 범위를 셀 전체로 확장 */
+	width: 100%;
+	height: 100%;
+}
+
+/* 기본 배경색 */
+.table td {
+	background-color: #f9f9f9;
 	text-align: center;
-	background-color: yellow;
+	width: 150px;
+	vertical-align: middle;
+	cursor: pointer; /* 클릭 가능 표시 */
+	border: 1px solid #dee2e6; /* 테두리 설정 */
+}
+
+.table td:hover{
+	background-color:#cccccc; /* 마우스 오버 시 배경색 */
+}
+
+
+
+.table td:active {
+	background-color: #666666;  /* 클릭 시 배경색 */
 }

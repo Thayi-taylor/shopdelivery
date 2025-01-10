@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.project</groupId>
-    <artifactId>ShopDelivery</artifactId>
+    <artifactId>ProjectShopDelivery</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging> <!-- WAR 파일로 패키징 -->
 
