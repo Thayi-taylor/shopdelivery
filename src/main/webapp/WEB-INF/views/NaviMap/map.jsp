@@ -159,6 +159,12 @@
                 return;
             }
 
+            // 이미 해당 경계가 존재하는 경우 생성을 막음
+            if (polygons[full_cd]) {
+                removePolygon(full_cd);
+                return;
+            }
+
             $.ajax({
                 url: 'https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json',
                 type: 'GET',
@@ -173,8 +179,7 @@
                     if (data.result && data.result.length > 0) {
                         // 기존 폴리곤 제거
                         if (polygons[full_cd]) {
-                            map.removeLayer(polygons[full_cd]);
-                            delete polygons[full_cd];
+                            removePolygon(full_cd);
                         }
 
                         let matchingBoundary = null;
@@ -263,16 +268,16 @@
         }
 
 
-     
+
         // 📌 **폴리곤 및 목록 항목 제거**
-        function removePolygon(adm_cd) {
-            if (polygons[adm_cd]) {
-                map.removeLayer(polygons[adm_cd]);
-                delete polygons[adm_cd];
+        function removePolygon(full_cd) {
+            if (polygons[full_cd]) {
+                map.removeLayer(polygons[full_cd]);
+                delete polygons[full_cd];
             }
 
             // 문자열 연결 방식으로 요소 삭제
-            $("#region-" + adm_cd).remove();
+            $("#region-" + full_cd).remove();
         }
 
 
